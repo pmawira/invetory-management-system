@@ -41,5 +41,6 @@ namespace Inventory.Management.System.Logic.DataAccess
         {
             Uow.Context.Set<T>().Update(entity);
         }
+      
     }
 }

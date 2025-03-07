@@ -1032,6 +1032,15 @@
           "buildTransitive/Mono.TextTemplating.targets": {}
         }
       },
+      "OneOf/3.0.271": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/OneOf.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/OneOf.dll": {}
+        }
+      },
       "System.ClientModel/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -3618,6 +3627,21 @@
         "readme.md"
       ]
     },
+    "OneOf/3.0.271": {
+      "sha512": "pqpqeK8xQGggExhr4tesVgJkjdn+9HQAO0QgrYV2hFjE3y90okzk1kQMntMiUOGfV7FrCUfKPaVvPBD4IANqKg==",
+      "type": "package",
+      "path": "oneof/3.0.271",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35/OneOf.dll",
+        "lib/net45/OneOf.dll",
+        "lib/netstandard1.3/OneOf.dll",
+        "lib/netstandard2.0/OneOf.dll",
+        "oneof.3.0.271.nupkg.sha512",
+        "oneof.nuspec"
+      ]
+    },
     "System.ClientModel/1.0.0": {
       "sha512": "I3CVkvxeqFYjIVEP59DnjbeoGNfo/+SZrCLpRz2v/g0gpCHaEMPtWSY0s9k/7jR1rAsLNg2z2u1JRB76tPjnIw==",
       "type": "package",
@@ -4824,7 +4848,8 @@
       "MediatR >= 12.4.1",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.2",
       "Microsoft.EntityFrameworkCore.SqlServer >= 9.0.2",
-      "Microsoft.EntityFrameworkCore.Tools >= 9.0.2"
+      "Microsoft.EntityFrameworkCore.Tools >= 9.0.2",
+      "OneOf >= 3.0.271"
     ]
   },
   "packageFolders": {
@@ -4909,6 +4934,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[9.0.2, )"
+          },
+          "OneOf": {
+            "target": "Package",
+            "version": "[3.0.271, )"
           }
         },
         "imports": [

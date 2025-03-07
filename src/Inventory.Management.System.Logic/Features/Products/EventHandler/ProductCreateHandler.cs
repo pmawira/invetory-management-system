@@ -33,7 +33,7 @@ namespace Inventory.Management.System.Logic.Features.Products.EventHandler
             {
                 // Map the request DTO to Product entity
                 var item = _mapper.Map<Product>(request);
-
+                _logger.LogInformation("Creating {item} to the db", item);
                 // Add the new product
                 await _productRepository.Add(item);
                 await _uow.SaveChanges(cancellationToken);
