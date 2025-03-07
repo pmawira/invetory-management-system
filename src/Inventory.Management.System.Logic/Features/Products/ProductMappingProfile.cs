@@ -20,7 +20,16 @@ namespace Inventory.Management.System.Logic.Features.Products
              .ForMember(dest => dest.DateCreated, opt => opt.Ignore()) // System-managed
              .ForMember(dest => dest.DateModified, opt => opt.Ignore()) // System-managed
              .ForMember(dest => dest.Category, opt => opt.Ignore()); // Navigation property
+
+            CreateMap<ProductCreateCommand, Product>()
+           .ForMember(dest => dest.Id, opt => opt.Ignore()) // ID is auto-generated
+           .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(_ => DateTime.UtcNow)) // Set default value
+           .ForMember(dest => dest.DateModified, opt => opt.MapFrom(_ => DateTime.UtcNow)) // Set default value
+           .ForMember(dest => dest.Category, opt => opt.Ignore()); // Ignore navigation property
+
             CreateMap<ProductCreateRequest, ProductCreateCommand>();
+            CreateMap<ProductDTO, Product>();
+            CreateMap<Product,ProductDTO>();
         }
     }
 }

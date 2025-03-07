@@ -10,6 +10,6 @@ namespace Inventory.Management.System.Logic.Features.Products.Database
 {
     public interface IProductRepository:IBaseGenericRepository<Product>
     {
-        Product GetProductByName(string name);
+        Task<Product> GetProductByName(string name);
     }
 }

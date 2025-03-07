@@ -1,5 +1,6 @@
 ﻿using Inventory.Management.System.Logic.DataAccess;
 using Inventory.Management.System.Logic.Database.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,10 @@ namespace Inventory.Management.System.Logic.Features.Products.Database
         public ProductRepository(IUnitOfWork uow) : base(uow)
         {
         }
-        public Product? GetProductByName(string name)
+        public async Task<Product?> GetProductByName(string name)
         {
-            return Uow.Context.Set<Product>()
-                .FirstOrDefault(p => p.Name == name);
+            return await Uow.Context.Set<Product>()
+                .FirstOrDefaultAsync(p => p.Name == name);
         }
     }
 }

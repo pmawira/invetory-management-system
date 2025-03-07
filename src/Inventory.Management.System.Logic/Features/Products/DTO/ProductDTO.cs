@@ -1,17 +1,15 @@
-﻿using Inventory.Management.System.Logic.Database.Models;
-using Inventory.Management.System.Logic.Features.Products.DTO;
-using MediatR;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Inventory.Management.System.Logic.Features.Products.Commands
+namespace Inventory.Management.System.Logic.Features.Products.DTO
 {
-    public class ProductCreateCommand: IRequest<ProductDTO>
+    public class ProductDTO
     {
+        public int Id { get; set; }
+
         public string Name { get; set; } = null!;
 
         public string? Description { get; set; }
@@ -21,5 +19,9 @@ namespace Inventory.Management.System.Logic.Features.Products.Commands
         public int Quantity { get; set; }
 
         public int CategoryId { get; set; }
+
+        public DateTime? DateCreated { get; set; }
+
+        public DateTime? DateModified { get; set; }
     }
 }
