@@ -17,5 +17,9 @@ public partial class Product
 
     public int CategoryId { get; set; }
 
+    public DateTime? DateCreated { get; set; }
+
+    public DateTime? DateModified { get; set; }
+
     public virtual Category Category { get; set; } = null!;
 }
