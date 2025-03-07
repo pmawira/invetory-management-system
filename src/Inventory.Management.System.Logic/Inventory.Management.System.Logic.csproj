@@ -9,10 +9,7 @@
   <ItemGroup>
     <Folder Include="Database\Models\" />
     <Folder Include="Features\Categories\Commands\Validators\" />
-    <Folder Include="Features\Categories\Database\" />
     <Folder Include="Features\Categories\Domain\" />
-    <Folder Include="Features\Categories\DTO\" />
-    <Folder Include="Features\Categories\EventHandler\" />
     <Folder Include="Features\Products\Commands\Validators\" />
     <Folder Include="Features\Products\Domain\" />
   </ItemGroup>

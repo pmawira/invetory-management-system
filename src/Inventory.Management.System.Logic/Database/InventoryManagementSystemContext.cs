@@ -31,6 +31,7 @@ public partial class InventoryManagementSystemContext : DbContext
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.DateCreated).HasColumnType("datetime");
             entity.Property(e => e.DateModified).HasColumnType("datetime");
+            entity.Property(e => e.Description).HasMaxLength(50);
             entity.Property(e => e.Name).HasMaxLength(10);
         });
 
@@ -41,7 +42,7 @@ public partial class InventoryManagementSystemContext : DbContext
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.DateCreated).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DateModified).HasColumnType("datetime");
+            entity.Property(e => e.DateModified).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.Description).HasMaxLength(50);
             entity.Property(e => e.Name).HasMaxLength(10);
             entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 0)");
