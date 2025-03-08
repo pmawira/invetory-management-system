@@ -1,5 +1,6 @@
 ﻿using Inventory.Management.System.Logic.DataAccess;
 using Inventory.Management.System.Logic.Database.Models;
+using Inventory.Management.System.Logic.Features.Products.DTO;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,5 +21,6 @@ namespace Inventory.Management.System.Logic.Features.Categories.Database
             return await Uow.Context.Set<Category>()
                 .AnyAsync(c => c.Id == id);
         }
+     
     }
 }

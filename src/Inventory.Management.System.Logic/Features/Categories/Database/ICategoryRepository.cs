@@ -1,5 +1,6 @@
 ﻿using Inventory.Management.System.Logic.DataAccess;
 using Inventory.Management.System.Logic.Database.Models;
+using Inventory.Management.System.Logic.Features.Products.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

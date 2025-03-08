@@ -187,3 +187,4 @@ D:\Inventory.Management.System\src\Inventory.Management.System.API\bin\Debug\net
 D:\Inventory.Management.System\src\Inventory.Management.System.API\bin\Debug\net8.0\Serilog.Sinks.Console.dll
 D:\Inventory.Management.System\src\Inventory.Management.System.API\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
 D:\Inventory.Management.System\src\Inventory.Management.System.API\bin\Debug\net8.0\Serilog.Sinks.File.dll
+D:\Inventory.Management.System\src\Inventory.Management.System.API\obj\Debug\net8.0\Inventory.Management.System.API.MvcApplicationPartsAssemblyInfo.cs

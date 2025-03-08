@@ -109,5 +109,42 @@ namespace Inventory.Management.System.API.Controllers
                 return NotFound();
             return Ok(product);
         }
+
+        [HttpGet("List")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Product>))]
+        public async Task<ActionResult<List<Product>>> List()
+        {
+            try
+            {
+                var products =  _repository.GetSet().ToList();
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error listing banks");
+                return Problem(ex.Message);
+            }
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id, CancellationToken token)
+        {
+            try
+            {
+                // Check if the product exists
+                var product = await _repository.GetProductById(id);
+                if (product == null)
+                    return NotFound(new { message = $"Product with ID {id} not found." });
+
+                _repository.Delete(product);
+                return Ok(new { message = "Product deleted successfully." });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting product {id}", id);
+                return Problem("An error occurred while deleting the product.");
+            }
+        }
+
     }
 }
