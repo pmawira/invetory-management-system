@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.Management.System
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.Management.System.Logic", "src\Inventory.Management.System.Logic\Inventory.Management.System.Logic.csproj", "{2BCDE9E7-7454-4C43-A1F6-6C0F5E3D1329}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C4FF6739-CB4B-41D3-A635-EE67557E200E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.Management.System.Logic.Tests", "tests\Inventory.Management.System.Logic.Tests\Inventory.Management.System.Logic.Tests.csproj", "{FB3E31FB-DC94-48BC-A936-BE434830082E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +29,10 @@ Global
 		{2BCDE9E7-7454-4C43-A1F6-6C0F5E3D1329}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BCDE9E7-7454-4C43-A1F6-6C0F5E3D1329}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BCDE9E7-7454-4C43-A1F6-6C0F5E3D1329}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB3E31FB-DC94-48BC-A936-BE434830082E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB3E31FB-DC94-48BC-A936-BE434830082E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB3E31FB-DC94-48BC-A936-BE434830082E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB3E31FB-DC94-48BC-A936-BE434830082E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -33,6 +41,7 @@ Global
 		{9766268E-3F1A-485D-BE6E-80AF89205B60} = {0FBB7149-F74B-49DE-8E47-3D80971ABCDD}
 		{94648D38-210B-4453-A450-34E6DFE593FA} = {9766268E-3F1A-485D-BE6E-80AF89205B60}
 		{2BCDE9E7-7454-4C43-A1F6-6C0F5E3D1329} = {9766268E-3F1A-485D-BE6E-80AF89205B60}
+		{FB3E31FB-DC94-48BC-A936-BE434830082E} = {C4FF6739-CB4B-41D3-A635-EE67557E200E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C99717C1-0D88-4404-AF9B-8A9A74EDB85C}

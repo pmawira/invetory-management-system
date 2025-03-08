@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Inventory.Management.System.Logic.DataAccess
 {
-    internal class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         public InventoryManagementSystemContext Context { get; }
         private readonly ILogger<IUnitOfWork> _logger;
