@@ -11,5 +11,6 @@ namespace Inventory.Management.System.Logic.Features.Products.Database
     public interface IProductRepository:IBaseGenericRepository<Product>
     {
         Task<Product> GetProductByName(string name);
+        Task<Product> GetProductById(int id);
     }
 }
