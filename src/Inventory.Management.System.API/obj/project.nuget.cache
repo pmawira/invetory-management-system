@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ei4W47p1Q80=",
+  "dgSpecHash": "cw9gJDO4+EA=",
   "success": true,
   "projectFilePath": "D:\\Inventory.Management.System\\src\\Inventory.Management.System.API\\Inventory.Management.System.API.csproj",
   "expectedPackageFiles": [
@@ -36,6 +36,9 @@
     "C:\\Users\\peterm\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\9.0.2\\microsoft.extensions.dependencyinjection.9.0.2.nupkg.sha512",
     "C:\\Users\\peterm\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.2\\microsoft.extensions.dependencyinjection.abstractions.9.0.2.nupkg.sha512",
     "C:\\Users\\peterm\\.nuget\\packages\\microsoft.extensions.dependencymodel\\9.0.2\\microsoft.extensions.dependencymodel.9.0.2.nupkg.sha512",
+    "C:\\Users\\peterm\\.nuget\\packages\\microsoft.extensions.diagnostics.abstractions\\9.0.2\\microsoft.extensions.diagnostics.abstractions.9.0.2.nupkg.sha512",
+    "C:\\Users\\peterm\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\9.0.2\\microsoft.extensions.fileproviders.abstractions.9.0.2.nupkg.sha512",
+    "C:\\Users\\peterm\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\9.0.2\\microsoft.extensions.hosting.abstractions.9.0.2.nupkg.sha512",
     "C:\\Users\\peterm\\.nuget\\packages\\microsoft.extensions.logging\\9.0.2\\microsoft.extensions.logging.9.0.2.nupkg.sha512",
     "C:\\Users\\peterm\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.2\\microsoft.extensions.logging.abstractions.9.0.2.nupkg.sha512",
     "C:\\Users\\peterm\\.nuget\\packages\\microsoft.extensions.options\\9.0.2\\microsoft.extensions.options.9.0.2.nupkg.sha512",

@@ -182,6 +182,10 @@
               "target": "Package",
               "version": "[9.0.2, )"
             },
+            "Microsoft.Extensions.Hosting.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
             "OneOf": {
               "target": "Package",
               "version": "[3.0.271, )"
