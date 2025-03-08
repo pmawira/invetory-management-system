@@ -22,6 +22,8 @@ public partial class InventoryManagementSystemContext : DbContext
 
     public virtual DbSet<StockAddition> StockAdditions { get; set; }
 
+    public virtual DbSet<StockWithdrawal> StockWithdrawals { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=NAUTILUS\\MSSQLSERVER01;Database=InventoryManagementSystem;Trusted_Connection=True;TrustServerCertificate=True;");
@@ -68,6 +70,21 @@ public partial class InventoryManagementSystemContext : DbContext
             entity.HasOne(d => d.Product).WithMany(p => p.StockAdditions)
                 .HasForeignKey(d => d.ProductId)
                 .HasConstraintName("FK__StockAddi__Produ__4CA06362");
+        });
+
+        modelBuilder.Entity<StockWithdrawal>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__StockWit__3214EC27A13C332B");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.DateWithdrawn)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.ProductId).HasColumnName("ProductID");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.StockWithdrawals)
+                .HasForeignKey(d => d.ProductId)
+                .HasConstraintName("FK__StockWith__Produ__52593CB8");
         });
 
         OnModelCreatingPartial(modelBuilder);

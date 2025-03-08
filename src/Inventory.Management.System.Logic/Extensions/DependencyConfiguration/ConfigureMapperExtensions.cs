@@ -1,6 +1,7 @@
 ﻿using Inventory.Management.System.Logic.Features.Categories;
 using Inventory.Management.System.Logic.Features.Products;
 using Inventory.Management.System.Logic.Features.StockAdditions;
+using Inventory.Management.System.Logic.Features.StockWithdrawals;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Inventory.Management.System.Logic.Extensions.DependencyConfiguration
             typeof(ProductMappingProfile).Assembly,
             typeof(CategoryMappingProfile).Assembly,
              typeof(StockAdditionMappingProfile).Assembly,
+             typeof(StockWithdrawalMappingProfile).Assembly,
         };
             collection.AddAutoMapper(assemblies);
         }

@@ -7,6 +7,8 @@ using Inventory.Management.System.Logic.Features.Products.Database;
 using Inventory.Management.System.Logic.Features.Products.DTO;
 using Inventory.Management.System.Logic.Features.StockAdditions.Database;
 using Inventory.Management.System.Logic.Features.StockAdditions.DTO;
+using Inventory.Management.System.Logic.Features.StockWithdrawals.Database;
+using Inventory.Management.System.Logic.Features.StockWithdrawals.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,9 +29,11 @@ namespace Inventory.Management.System.API.Controllers
         protected readonly IProductRepository _repository;
         protected readonly ICategoryRepository _categoryRepository;
         protected readonly IStockAdditionRepository _stockAdditionRepository;
+        protected readonly IStockWithdrawalRepository _stockWithdrawalRepository;
+
         protected IUnitOfWork _uow;
 
-        public ProductController(ILogger<ProductController> logger, ICategoryRepository categoryRepository, IMapper mapper, ISender sender, IProductRepository repository, IStockAdditionRepository stockAdditionRepository, IUnitOfWork uow)
+        public ProductController(ILogger<ProductController> logger, ICategoryRepository categoryRepository, IMapper mapper, ISender sender, IProductRepository repository, IStockAdditionRepository stockAdditionRepository, IUnitOfWork uow, IStockWithdrawalRepository stockWithdrawalRepository)
         {
             _logger = logger;
             _mapper = mapper;
@@ -38,6 +42,7 @@ namespace Inventory.Management.System.API.Controllers
             _categoryRepository = categoryRepository;
             _stockAdditionRepository = stockAdditionRepository;
             _uow = uow;
+            _stockWithdrawalRepository = stockWithdrawalRepository;
         }
         [HttpPost]
         [Produces(MediaTypeNames.Application.Json)]
@@ -178,6 +183,38 @@ namespace Inventory.Management.System.API.Controllers
                 return Problem("An error occurred while adding stock.");
             }
         }
+        [HttpPost("withdraw-stock")]
+        public async Task<IActionResult> WithdrawStock([FromBody] StockWithdrawalRequest request, CancellationToken token)
+        {
+            try
+            {
+                var product = await _repository.GetById(request.ProductId);
+                if (product == null)
+                    return NotFound(new { message = $"Product with ID {request.ProductId} not found." });
+
+                // Prevent negative stock
+                if (product.StockQuantity < request.QuantityWithdrawn)
+                    return BadRequest(new { message = "Insufficient stock available." });
+
+                // Record the withdrawal
+                var stockWithdrawal = _mapper.Map<StockWithdrawal>(request);
+               await _stockWithdrawalRepository.Add(stockWithdrawal);
+               await _uow.SaveChanges(token);
+                // Update product stock quantity
+                product.StockQuantity -= request.QuantityWithdrawn;
+
+                var command = _mapper.Map<ProductUpdateCommand>(product);
+                await _sender.Send(command);
+
+                return Ok(new { message = "Stock withdrawn successfully.", newStockLevel = product.StockQuantity });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error withdrawing stock for product {id}", request.ProductId);
+                return Problem("An error occurred while withdrawing stock.");
+            }
+        }
+
 
     }
 }
