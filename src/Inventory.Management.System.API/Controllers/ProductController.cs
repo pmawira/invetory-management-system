@@ -10,6 +10,7 @@ using Inventory.Management.System.Logic.Features.StockAdditions.DTO;
 using Inventory.Management.System.Logic.Features.StockWithdrawals.Database;
 using Inventory.Management.System.Logic.Features.StockWithdrawals.DTO;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -46,6 +47,7 @@ namespace Inventory.Management.System.API.Controllers
             _stockWithdrawalRepository = stockWithdrawalRepository;
             _inventoryMovementRepository = inventoryMovementRepository;
         }
+        [Authorize]
         [HttpPost]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProductDTO))]
@@ -75,6 +77,7 @@ namespace Inventory.Management.System.API.Controllers
                 return Problem(ex.Message);
             }
         }
+        [Authorize]
         [HttpPut("{id:int}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
@@ -123,7 +126,7 @@ namespace Inventory.Management.System.API.Controllers
                 return NotFound();
             return Ok(product);
         }
-
+       
         [HttpGet("List")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Product>))]
@@ -140,6 +143,7 @@ namespace Inventory.Management.System.API.Controllers
                 return Problem(ex.Message);
             }
         }
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id, CancellationToken token)
         {
@@ -159,6 +163,7 @@ namespace Inventory.Management.System.API.Controllers
                 return Problem("An error occurred while deleting the product.");
             }
         }
+        [Authorize]
         [HttpPost("add-stock")]
         public async Task<IActionResult> AddStock(StockAdditionRequest request, CancellationToken token)
         {
@@ -194,6 +199,7 @@ namespace Inventory.Management.System.API.Controllers
                 return Problem("An error occurred while adding stock.");
             }
         }
+        [Authorize]
         [HttpPost("withdraw-stock")]
         public async Task<IActionResult> WithdrawStock([FromBody] StockWithdrawalRequest request, CancellationToken token)
         {

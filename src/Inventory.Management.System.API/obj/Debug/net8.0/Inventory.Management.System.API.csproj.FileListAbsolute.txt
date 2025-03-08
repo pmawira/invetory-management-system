@@ -475,3 +475,6 @@ D:\Inventory.Management.System\src\Inventory.Management.System.API\obj\Debug\net
 D:\Inventory.Management.System\src\Inventory.Management.System.API\obj\Debug\net8.0\Inventory.Management.System.API.pdb
 D:\Inventory.Management.System\src\Inventory.Management.System.API\obj\Debug\net8.0\Inventory.Management.System.API.genruntimeconfig.cache
 D:\Inventory.Management.System\src\Inventory.Management.System.API\obj\Debug\net8.0\ref\Inventory.Management.System.API.dll
+D:\Inventory.Management.System\src\Inventory.Management.System.API\bin\Debug\net8.0\BCrypt.Net-Next.dll
+D:\Inventory.Management.System\src\Inventory.Management.System.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Inventory.Management.System\src\Inventory.Management.System.API\bin\Debug\net8.0\Microsoft.Bcl.Memory.dll

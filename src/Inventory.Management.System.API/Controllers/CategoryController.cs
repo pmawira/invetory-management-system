@@ -7,6 +7,7 @@ using Inventory.Management.System.Logic.Features.Products.Commands;
 using Inventory.Management.System.Logic.Features.Products.Database;
 using Inventory.Management.System.Logic.Features.Products.DTO;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
@@ -15,6 +16,7 @@ namespace Inventory.Management.System.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoryController : ControllerBase
     {
         protected readonly ILogger<CategoryController> _logger;
