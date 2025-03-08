@@ -30,10 +30,11 @@ namespace Inventory.Management.System.API.Controllers
         protected readonly ICategoryRepository _categoryRepository;
         protected readonly IStockAdditionRepository _stockAdditionRepository;
         protected readonly IStockWithdrawalRepository _stockWithdrawalRepository;
+        protected readonly IInventoryMovementRepository _inventoryMovementRepository;
 
         protected IUnitOfWork _uow;
 
-        public ProductController(ILogger<ProductController> logger, ICategoryRepository categoryRepository, IMapper mapper, ISender sender, IProductRepository repository, IStockAdditionRepository stockAdditionRepository, IUnitOfWork uow, IStockWithdrawalRepository stockWithdrawalRepository)
+        public ProductController(ILogger<ProductController> logger, ICategoryRepository categoryRepository, IMapper mapper, ISender sender, IProductRepository repository, IStockAdditionRepository stockAdditionRepository, IUnitOfWork uow, IStockWithdrawalRepository stockWithdrawalRepository, IInventoryMovementRepository inventoryMovementRepository)
         {
             _logger = logger;
             _mapper = mapper;
@@ -43,6 +44,7 @@ namespace Inventory.Management.System.API.Controllers
             _stockAdditionRepository = stockAdditionRepository;
             _uow = uow;
             _stockWithdrawalRepository = stockWithdrawalRepository;
+            _inventoryMovementRepository = inventoryMovementRepository;
         }
         [HttpPost]
         [Produces(MediaTypeNames.Application.Json)]
@@ -169,6 +171,15 @@ namespace Inventory.Management.System.API.Controllers
                 // Create new stock addition record
                 var stockAddition = _mapper.Map<StockAddition>(request);
                 await _stockAdditionRepository.Add(stockAddition);
+                // Create new inventory movement record
+                var inventoryMovement = new InventoryMovement
+                {
+                    ProductId = request.ProductId,
+                    Quantity = request.QuantityAdded,
+                    MovementType = "Addition",
+                    DateMoved = DateTime.UtcNow
+                };
+               await _inventoryMovementRepository.Add(inventoryMovement);
                 await _uow.SaveChanges(token);
                 // Update product stock quantity
                 product.StockQuantity += request.QuantityAdded;
@@ -199,7 +210,16 @@ namespace Inventory.Management.System.API.Controllers
                 // Record the withdrawal
                 var stockWithdrawal = _mapper.Map<StockWithdrawal>(request);
                await _stockWithdrawalRepository.Add(stockWithdrawal);
-               await _uow.SaveChanges(token);
+                // Create new inventory movement record
+                var inventoryMovement = new InventoryMovement
+                {
+                    ProductId = request.ProductId,
+                    Quantity = -request.QuantityWithdrawn, // Negative quantity for withdrawal
+                    MovementType = "Withdrawal",
+                    DateMoved = DateTime.UtcNow
+                };
+                await _inventoryMovementRepository.Add(inventoryMovement);
+                await _uow.SaveChanges(token);
                 // Update product stock quantity
                 product.StockQuantity -= request.QuantityWithdrawn;
 
@@ -215,6 +235,18 @@ namespace Inventory.Management.System.API.Controllers
             }
         }
 
+        [HttpGet("{productId}/inventory-movement-history")]
+        public async Task<IActionResult> GetInventoryMovementHistory(int productId, CancellationToken token)
+        {
+            var movementHistory = await _uow.Context.Set<InventoryMovement>()
+                .Where(m => m.ProductId == productId)
+                .OrderByDescending(m => m.DateMoved)
+                .ToListAsync(token);
 
+            if (!movementHistory.Any())
+                return NotFound(new { message = "No inventory movement history found for this product." });
+
+            return Ok(movementHistory);
+        }
     }
 }

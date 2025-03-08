@@ -27,6 +27,8 @@ public partial class Product
 
     public virtual Category Category { get; set; } = null!;
 
+    public virtual ICollection<InventoryMovement> InventoryMovements { get; set; } = new List<InventoryMovement>();
+
     public virtual ICollection<StockAddition> StockAdditions { get; set; } = new List<StockAddition>();
 
     public virtual ICollection<StockWithdrawal> StockWithdrawals { get; set; } = new List<StockWithdrawal>();

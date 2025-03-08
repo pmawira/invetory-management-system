@@ -18,6 +18,8 @@ public partial class InventoryManagementSystemContext : DbContext
 
     public virtual DbSet<Category> Categories { get; set; }
 
+    public virtual DbSet<InventoryMovement> InventoryMovements { get; set; }
+
     public virtual DbSet<Product> Products { get; set; }
 
     public virtual DbSet<StockAddition> StockAdditions { get; set; }
@@ -37,6 +39,22 @@ public partial class InventoryManagementSystemContext : DbContext
             entity.Property(e => e.DateModified).HasColumnType("datetime");
             entity.Property(e => e.Description).HasMaxLength(100);
             entity.Property(e => e.Name).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<InventoryMovement>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Inventor__3214EC2791E9C6E1");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.DateMoved)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.MovementType).HasMaxLength(50);
+            entity.Property(e => e.ProductId).HasColumnName("ProductID");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.InventoryMovements)
+                .HasForeignKey(d => d.ProductId)
+                .HasConstraintName("FK__Inventory__Produ__5812160E");
         });
 
         modelBuilder.Entity<Product>(entity =>
