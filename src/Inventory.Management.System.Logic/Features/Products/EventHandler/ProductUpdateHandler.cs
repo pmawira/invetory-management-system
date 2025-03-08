@@ -31,11 +31,12 @@ namespace Inventory.Management.System.Logic.Features.Products.EventHandler
         {
             try
             {
-                var entity = await _productRepository.GetProductByName(request.Name);
-
-                if (entity == null) { return new NotFound(); }
+                var entity = await _productRepository.GetProductById(request.Id);
 
                 _mapper.Map(request, entity);
+
+                await _productRepository.Update(entity.Id, entity, cancellationToken);
+                await _uow.SaveChanges(cancellationToken);
 
                 return Task.CompletedTask;
             }

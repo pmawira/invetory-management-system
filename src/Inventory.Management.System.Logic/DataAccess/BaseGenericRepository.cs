@@ -28,7 +28,6 @@ namespace Inventory.Management.System.Logic.DataAccess
 
             dbSet.Remove(entity);
         }
-
         public IQueryable<T> GetSet()
         {
             var res = Uow.Context.Set<T>()
@@ -37,9 +36,10 @@ namespace Inventory.Management.System.Logic.DataAccess
             return res;
         }
 
-        public void Update(int id, T entity, CancellationToken cancellationToken)
+        public async Task Update(int id, T entity, CancellationToken cancellationToken)
         {
-            Uow.Context.Set<T>().Update(entity);
+           
+               Uow.Context.Set<T>().Update(entity);
         }
       
     }

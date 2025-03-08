@@ -170,7 +170,6 @@ D:\Inventory.Management.System\src\Inventory.Management.System.API\bin\Debug\net
 D:\Inventory.Management.System\src\Inventory.Management.System.API\bin\Debug\net8.0\Inventory.Management.System.Logic.dll
 D:\Inventory.Management.System\src\Inventory.Management.System.API\bin\Debug\net8.0\Inventory.Management.System.Logic.pdb
 D:\Inventory.Management.System\src\Inventory.Management.System.API\obj\Debug\net8.0\Inventory.Management.System.API.csproj.AssemblyReference.cache
-D:\Inventory.Management.System\src\Inventory.Management.System.API\obj\Debug\net8.0\Inventory.Management.System.API.MvcApplicationPartsAssemblyInfo.cs
 D:\Inventory.Management.System\src\Inventory.Management.System.API\obj\Debug\net8.0\Inventory.Management.System.API.sourcelink.json
 D:\Inventory.Management.System\src\Inventory.Management.System.API\obj\Debug\net8.0\Inventor.E2D3E9AB.Up2Date
 D:\Inventory.Management.System\src\Inventory.Management.System.API\bin\Debug\net8.0\EntityFramework.Exceptions.Common.dll

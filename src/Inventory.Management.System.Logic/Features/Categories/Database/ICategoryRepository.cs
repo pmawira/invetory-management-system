@@ -10,5 +10,6 @@ namespace Inventory.Management.System.Logic.Features.Categories.Database
 {
     public interface ICategoryRepository: IBaseGenericRepository<Category>
     {
+       public Task<bool> ExistsByID(int? id);
     }
 }

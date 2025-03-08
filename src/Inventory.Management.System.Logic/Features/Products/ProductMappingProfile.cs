@@ -28,6 +28,8 @@ namespace Inventory.Management.System.Logic.Features.Products
            .ForMember(dest => dest.Category, opt => opt.Ignore()); // Ignore navigation property
 
             CreateMap<ProductCreateRequest, ProductCreateCommand>();
+            CreateMap<ProductUpdateRequest, ProductUpdateCommand>();
+
             CreateMap<ProductDTO, Product>();
             CreateMap<Product,ProductDTO>();
             CreateMap<ProductUpdateCommand, Product>();

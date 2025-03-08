@@ -5,7 +5,7 @@ namespace Inventory.Management.System.Logic.DataAccess
     {
         public Task Add(T entity);
         public void Delete(T entity);
-        public IQueryable<T> GetSet();
-        public void Update(int id, T entity, CancellationToken cancellationToken);
+        public IQueryable<T> GetSet();      
+        public Task Update(int id, T entity, CancellationToken cancellationToken);
     }
 }
