@@ -19,7 +19,7 @@ namespace Inventory.Management.System.Logic.Features.Products.Commands
         public decimal UnitPrice { get; set; }
 
         public int Quantity { get; set; }
-
+        public int ReorderLevel { get; set; }
         public int CategoryId { get; set; }
     }
 }

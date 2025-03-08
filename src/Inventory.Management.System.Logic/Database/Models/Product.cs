@@ -21,5 +21,7 @@ public partial class Product
 
     public DateTime? DateModified { get; set; }
 
+    public int ReorderLevel { get; set; }
+
     public virtual Category Category { get; set; } = null!;
 }

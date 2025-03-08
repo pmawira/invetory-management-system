@@ -37,6 +37,7 @@ namespace Inventory.Management.System.Logic.Features.Categories.EventHandler
             {
                 // Map the request DTO to Product entity
                 var item = _mapper.Map<Category>(request);
+                item.DateCreated = DateTime.UtcNow;
                 _logger.LogInformation("Creating {item} to the db", item);
                 // Add the new product
                 await _categoryRepository.Add(item);

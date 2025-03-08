@@ -44,6 +44,7 @@ public partial class InventoryManagementSystemContext : DbContext
             entity.Property(e => e.DateCreated).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.Description).HasMaxLength(100);
             entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.ReorderLevel).HasDefaultValue(10);
             entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 0)");
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)

@@ -17,5 +17,6 @@ namespace Inventory.Management.System.Logic.Features.Products.DTO
         public int Quantity { get; set; }
 
         public int CategoryId { get; set; }
+        public int ReorderLevel { get; set; }
     }
 }

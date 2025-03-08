@@ -23,7 +23,7 @@ namespace Inventory.Management.System.Logic.Features.Products.Commands
         public int Quantity { get; set; }
 
         public int CategoryId { get; set; }
-
+        public int ReorderLevel { get; set; }
         public DateTime? DateCreated { get; set; }
 
         public DateTime? DateModified { get; set; }
