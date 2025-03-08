@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using Inventory.Management.System.Logic.Database.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
 
 namespace Inventory.Management.System.Logic.Database;
 
@@ -28,22 +26,13 @@ public partial class InventoryManagementSystemContext : DbContext
 
     public virtual DbSet<StockWithdrawal> StockWithdrawals { get; set; }
 
+    public virtual DbSet<User> Users { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            // Check if any database provider is already registered
-            var hasProvider = optionsBuilder.Options.Extensions
-                .Any(e => e is RelationalOptionsExtension || e is InMemoryOptionsExtension);
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=NAUTILUS\\MSSQLSERVER01;Database=InventoryManagementSystem;Trusted_Connection=True;TrustServerCertificate=True;");
 
-            if (!hasProvider)
-            {
-                optionsBuilder.UseSqlServer("Server=NAUTILUS\\MSSQLSERVER01;Database=InventoryManagementSystem;Trusted_Connection=True;TrustServerCertificate=True;");
-            }
-        }
-    }
-
-protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Category>(entity =>
         {
@@ -116,6 +105,20 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
             entity.HasOne(d => d.Product).WithMany(p => p.StockWithdrawals)
                 .HasForeignKey(d => d.ProductId)
                 .HasConstraintName("FK__StockWith__Produ__52593CB8");
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Users__3214EC070196EBD7");
+
+            entity.HasIndex(e => e.Username, "UQ__Users__536C85E43975515F").IsUnique();
+
+            entity.Property(e => e.DateCreated)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.DateModified).HasColumnType("datetime");
+            entity.Property(e => e.PasswordHash).HasMaxLength(255);
+            entity.Property(e => e.Username).HasMaxLength(50);
         });
 
         OnModelCreatingPartial(modelBuilder);
