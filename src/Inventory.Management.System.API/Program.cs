@@ -1,5 +1,8 @@
+using Inventory.Management.System.API.SystemConfiguration;
 using Inventory.Management.System.Logic.Extensions.DependencyConfiguration;
 using Inventory.Management.System.Logic.Settings;
+using Microsoft.EntityFrameworkCore.SqlServer.Internal;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +18,26 @@ builder.Services.ConfigureDatabaseSQLServer(builder.Environment, dbConnections.C
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Configure Serilog for logging
+// Ensure log directory exists
+var logPath = @"C:\CraftSilicon\inventoryManagementSystem\logs";
+Directory.CreateDirectory(logPath);
+
+Log.Logger = new LoggerConfiguration()
+    .Enrich.FromLogContext()
+    .WriteTo.Console() // Always log to console
+    .WriteTo.File(Path.Combine(logPath, "app.log"), rollingInterval: RollingInterval.Day) // Log to file in production
+    .CreateLogger();
+
+
+// Add Serilog to the DI container
+builder.Host.UseSerilog(); // Ensure this is before `builder.Build()
+//configure system services
+builder.Services.ConfigureSystemServices(builder.Environment, builder.Configuration, dbConnections.ConnectionString);
+
 var app = builder.Build();
+
+app.UseSerilogRequestLogging(); // Log HTTP requests
 
 // Enable Swagger in all environments (including production)
 app.UseSwagger();
