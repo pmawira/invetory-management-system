@@ -33,6 +33,7 @@ namespace Inventory.Management.System.Logic.Features.Products
             CreateMap<ProductDTO, Product>();
             CreateMap<Product,ProductDTO>();
             CreateMap<ProductUpdateCommand, Product>();
+            CreateMap<Product, ProductUpdateCommand>();
         }
     }
 }

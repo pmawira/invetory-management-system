@@ -24,6 +24,7 @@ namespace Inventory.Management.System.Logic.Features.Products.Commands
 
         public int CategoryId { get; set; }
         public int ReorderLevel { get; set; }
+        public int StockQuantity { get; set; }
         public DateTime? DateCreated { get; set; }
 
         public DateTime? DateModified { get; set; }
