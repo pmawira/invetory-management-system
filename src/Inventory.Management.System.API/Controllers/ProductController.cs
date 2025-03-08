@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using Inventory.Management.System.Logic.DataAccess;
 using Inventory.Management.System.Logic.Database.Models;
 using Inventory.Management.System.Logic.Features.Categories.Database;
 using Inventory.Management.System.Logic.Features.Products.Commands;
 using Inventory.Management.System.Logic.Features.Products.Database;
 using Inventory.Management.System.Logic.Features.Products.DTO;
+using Inventory.Management.System.Logic.Features.StockAdditions.Database;
+using Inventory.Management.System.Logic.Features.StockAdditions.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,14 +26,18 @@ namespace Inventory.Management.System.API.Controllers
         protected readonly ISender _sender;
         protected readonly IProductRepository _repository;
         protected readonly ICategoryRepository _categoryRepository;
+        protected readonly IStockAdditionRepository _stockAdditionRepository;
+        protected IUnitOfWork _uow;
 
-        public ProductController(ILogger<ProductController> logger, ICategoryRepository categoryRepository, IMapper mapper, ISender sender, IProductRepository repository)
+        public ProductController(ILogger<ProductController> logger, ICategoryRepository categoryRepository, IMapper mapper, ISender sender, IProductRepository repository, IStockAdditionRepository stockAdditionRepository, IUnitOfWork uow)
         {
-            _logger = logger; 
+            _logger = logger;
             _mapper = mapper;
             _sender = sender;
             _repository = repository;
             _categoryRepository = categoryRepository;
+            _stockAdditionRepository = stockAdditionRepository;
+            _uow = uow;
         }
         [HttpPost]
         [Produces(MediaTypeNames.Application.Json)]
@@ -41,16 +48,16 @@ namespace Inventory.Management.System.API.Controllers
         public async Task<IActionResult> Create(
         ProductCreateRequest request, CancellationToken token)
         {
-           
+
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
                 if (!await _categoryRepository.ExistsByID(request.CategoryId))
-                    return BadRequest(new {message = $"Category with ID {request.CategoryId} is not available"});
+                    return BadRequest(new { message = $"Category with ID {request.CategoryId} is not available" });
 
-                var comamand =  _mapper.Map<ProductCreateCommand>(request);
+                var comamand = _mapper.Map<ProductCreateCommand>(request);
                 var result = await _sender.Send(comamand);
 
                 return CreatedAtAction(nameof(GetProduct), new { id = result.Id }, result);
@@ -70,13 +77,13 @@ namespace Inventory.Management.System.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestResult))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(UnauthorizedResult))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update( int id,
+        public async Task<IActionResult> Update(int id,
         ProductUpdateRequest request, CancellationToken token)
         {
-         
+
             try
             {
-               if(!ModelState.IsValid)
+                if (!ModelState.IsValid)
                     return BadRequest();
 
                 if (!await _categoryRepository.ExistsByID(request.CategoryId))
@@ -88,7 +95,7 @@ namespace Inventory.Management.System.API.Controllers
 
                 var command = _mapper.Map<ProductUpdateCommand>(request);
                 command.Id = id;
-                              
+
 
                 await _sender.Send(command, token);
 
@@ -117,7 +124,7 @@ namespace Inventory.Management.System.API.Controllers
         {
             try
             {
-                var products =  _repository.GetSet().ToList();
+                var products = _repository.GetSet().ToList();
                 return Ok(products);
             }
             catch (Exception ex)
@@ -143,6 +150,32 @@ namespace Inventory.Management.System.API.Controllers
             {
                 _logger.LogError(ex, "Error deleting product {id}", id);
                 return Problem("An error occurred while deleting the product.");
+            }
+        }
+        [HttpPost("add-stock")]
+        public async Task<IActionResult> AddStock(StockAdditionRequest request, CancellationToken token)
+        {
+            try
+            {
+                var product = await _repository.GetById(request.ProductId);
+                if (product == null)
+                    return NotFound(new { message = $"Product with ID {request.ProductId} not found." });
+
+                // Create new stock addition record
+                var stockAddition = _mapper.Map<StockAddition>(request);
+                await _stockAdditionRepository.Add(stockAddition);
+                await _uow.SaveChanges(token);
+                // Update product stock quantity
+                product.StockQuantity += request.QuantityAdded;
+                var command = _mapper.Map<ProductUpdateCommand>(product);
+                await _sender.Send(command);
+
+                return Ok(new { message = "Stock added successfully.", newStockLevel = product.StockQuantity });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding stock for product {id}", request.ProductId);
+                return Problem("An error occurred while adding stock.");
             }
         }
 

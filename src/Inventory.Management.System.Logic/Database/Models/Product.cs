@@ -23,5 +23,9 @@ public partial class Product
 
     public int ReorderLevel { get; set; }
 
+    public int StockQuantity { get; set; }
+
     public virtual Category Category { get; set; } = null!;
+
+    public virtual ICollection<StockAddition> StockAdditions { get; set; } = new List<StockAddition>();
 }
