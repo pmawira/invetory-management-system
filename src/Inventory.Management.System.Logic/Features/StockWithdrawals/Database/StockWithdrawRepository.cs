@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Inventory.Management.System.Logic.Features.StockWithdrawals.Database
 {
-    public class StockWithdrawRepository : BaseGenericRepository<StockWithdrawal>
+    public class StockWithdrawRepository : BaseGenericRepository<StockWithdrawal>, IStockWithdrawalRepository
     {
         public StockWithdrawRepository(IUnitOfWork uow) : base(uow)
         {

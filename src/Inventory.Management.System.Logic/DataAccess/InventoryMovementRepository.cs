@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Inventory.Management.System.Logic.DataAccess
 {
-    public class InventoryMovementRepository: BaseGenericRepository<InventoryMovement>
+    public class InventoryMovementRepository: BaseGenericRepository<InventoryMovement>, IInventoryMovementRepository
     {
         public InventoryMovementRepository(IUnitOfWork uow) : base(uow)
         {
