@@ -21,6 +21,10 @@ namespace Inventory.Management.System.Logic.Features.Categories.Database
             return await Uow.Context.Set<Category>()
                 .AnyAsync(c => c.Id == id);
         }
-     
+        public async Task<Product?> GetById(int id)
+        {
+            return await Uow.Context.Set<Product>()
+              .FirstOrDefaultAsync(p => p.Id == id);
+        }
     }
 }

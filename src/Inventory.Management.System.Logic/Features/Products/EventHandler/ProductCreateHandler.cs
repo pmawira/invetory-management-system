@@ -39,7 +39,7 @@ namespace Inventory.Management.System.Logic.Features.Products.EventHandler
                 await _uow.SaveChanges(cancellationToken);
 
                 // Retrieve the saved product from the database
-                var product = await _productRepository.GetProductByName(item.Name);
+                var product = await _productRepository.GetByName(item.Name);
 
                 // Map to DTO
                 var dto = _mapper.Map<ProductDTO>(product);

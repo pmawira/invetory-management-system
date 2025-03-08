@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Inventory.Management.System.Logic.Database.Models;
 using Inventory.Management.System.Logic.Features.Categories.Commands;
+using Inventory.Management.System.Logic.Features.Categories.Database;
 using Inventory.Management.System.Logic.Features.Categories.DTO;
 using Inventory.Management.System.Logic.Features.Products.Commands;
 using Inventory.Management.System.Logic.Features.Products.Database;
@@ -19,8 +20,8 @@ namespace Inventory.Management.System.API.Controllers
         protected readonly ILogger<CategoryController> _logger;
         protected readonly IMapper _mapper;
         protected readonly ISender _sender;
-        protected readonly IProductRepository _repository;
-        public CategoryController(ILogger<CategoryController> logger, IMapper mapper, ISender sender, IProductRepository repository)
+        protected readonly ICategoryRepository _repository;
+        public CategoryController(ILogger<CategoryController> logger, IMapper mapper, ISender sender, ICategoryRepository repository)
         {
             _logger = logger;
             _mapper = mapper;
@@ -53,10 +54,26 @@ namespace Inventory.Management.System.API.Controllers
                 return Problem(ex.Message);
             }
         }
+        [HttpGet("List")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Category>))]
+        public async Task<ActionResult<List<Category>>> List()
+        {
+            try
+            {
+                var products = _repository.GetSet().ToList();
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error listing banks");
+                return Problem(ex.Message);
+            }
+        }
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetCategory(int id)
         {
-            var product = await _repository.GetProductById((id));
+            var product = await _repository.GetById((id));
 
             if (product == null)
                 return NotFound();

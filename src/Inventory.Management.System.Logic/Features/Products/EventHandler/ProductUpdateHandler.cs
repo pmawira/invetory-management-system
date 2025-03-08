@@ -31,7 +31,7 @@ namespace Inventory.Management.System.Logic.Features.Products.EventHandler
         {
             try
             {
-                var entity = await _productRepository.GetProductById(request.Id);
+                var entity = await _productRepository.GetById(request.Id);
 
                 _mapper.Map(request, entity);
                 entity.DateModified = DateTime.UtcNow;

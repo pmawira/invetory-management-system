@@ -82,7 +82,7 @@ namespace Inventory.Management.System.API.Controllers
                 if (!await _categoryRepository.ExistsByID(request.CategoryId))
                     return BadRequest(new { message = $"Category with ID {request.CategoryId} is not available" });
 
-                var existingProduct = await _repository.GetProductById(id);
+                var existingProduct = await _repository.GetById(id);
                 if (existingProduct == null)
                     return NotFound(new { message = $"Product with ID {id} not found." });
 
@@ -103,7 +103,7 @@ namespace Inventory.Management.System.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var product = await _repository.GetProductById((id));
+            var product = await _repository.GetById((id));
 
             if (product == null)
                 return NotFound();
@@ -132,7 +132,7 @@ namespace Inventory.Management.System.API.Controllers
             try
             {
                 // Check if the product exists
-                var product = await _repository.GetProductById(id);
+                var product = await _repository.GetById(id);
                 if (product == null)
                     return NotFound(new { message = $"Product with ID {id} not found." });
 

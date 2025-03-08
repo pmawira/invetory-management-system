@@ -11,13 +11,13 @@ namespace Inventory.Management.System.Logic.Features.Products.Database
         {
         }
 
-        public async Task<Product?> GetProductById(int id)
+        public async Task<Product?> GetById(int id)
         {
             return await Uow.Context.Set<Product>()
               .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<Product?> GetProductByName(string name)
+        public async Task<Product?> GetByName(string name)
         {
             return await Uow.Context.Set<Product>()
                 .FirstOrDefaultAsync(p => p.Name == name);
